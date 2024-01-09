@@ -22,7 +22,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // executeAsSudo(`node ${__dirname}/readSerialNumber.js`)
   ipcMain.handle('get-serial-number', readSerialNumber)
