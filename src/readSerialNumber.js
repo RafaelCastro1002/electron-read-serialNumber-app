@@ -1,4 +1,5 @@
 const executeAsSudo = require('./utils/sudo')
+const childProcess = require('child_process')
 
 const commandByPlatform = {
     linux: 'dmidecode -s system-serial-number',
@@ -8,7 +9,13 @@ const commandByPlatform = {
 
 async function readSerialNumber () {
 
-    const serialNumber = await executeAsSudo(commandByPlatform[process.platform])
+    let serialNumber = ''
+
+    if (!(process.platform === 'linux' || process.platform === 'darwin')) {
+        serialNumber = await executeAsSudo(commandByPlatform[process.platform])
+    } else {
+        serialNumber = childProcess.execSync(commandByPlatform[process.platform]).toString()
+    } 
 
     console.log('serialNumber: ', serialNumber);
     return serialNumber
